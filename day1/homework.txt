@@ -1,0 +1,35 @@
+0. Can you come up out 3 sceneraies which use AI methods?
+Ans: 智能语音处理、无人驾驶、无人机、仿生机器人、天猫精灵
+
+1. How do we use Github; Why do we use Jupyter and Pycharm;
+Ans: git不仅在生活中，在企业中也是很常用的持续集成软件，它可以帮助开发人员快速管理代码状态，提升开发效率，合并代码，回滚
+代码等等。Jupyter以前没用过的，因为比较偏向于教学软件。Pycharm是一直在用的，它有一些插件，以及一些很常用的功能，补全、
+pythonic、空变量引用报错等等，可以帮助开发者更快速的开发
+
+2. What's the Probability Model?
+Ans:用来描述不同随机变量之间关系的数学模型
+
+3. Can you came up with some sceneraies at which we could use Probability Model?
+Ans:贝叶斯模型
+
+4. Why do we use probability and what's the difficult points for programming based on parsing and pattern match?
+Ans:因为现实情况下无法做到完全解析匹配，影响结果的因素太多，无法完全预测
+
+5. What's the Language Model;
+Ans:语言模型是一个单纯的、统一的、抽象的形式系统
+
+6. Can you came up with some sceneraies at which we could use Language Model?
+Ans:单词识别、文本检测
+
+7. What's the 1-gram language model;
+Ans:P(w1, w2, w3, … , wn)≈P(w1)P(w2)P(w3)P(w4)…P(wn)
+P(wn) = 语料库中wn出现的次数 / 语料库中的总词数
+
+8. What's the disadvantages and advantages of 1-gram language model;
+Ans:优点就是最简单，消耗资源少，具有更可靠的统计信息，具有更高的可靠性
+    缺点就是与前一单词没关系，缺少辨识力
+
+9. What't the 2-gram models;
+Ans:P(w1, w2, w3, … , wn)≈P(w1)P(w2|w1)P(w3|w2)P(w4|w3)…P(wn|wn-1)
+P(w1) = 语料库中w1出现的次数 / 语料库中的总词数
+P(w2|w1) = 语料库中w1和w2一起出现的次数 / 语料库中w1出现的次数
