@@ -8,8 +8,6 @@ import random
 import jieba
 
 
-fail = [True, None]
-
 
 def is_variable(pat):
     return pat.startswith('?') and all(s.isalpha() for s in pat[1:])
@@ -20,7 +18,8 @@ def is_pattern_segment(pattern):
 
 
 def pat_match_with_seg(pattern, saying):
-    if not pattern or not saying: return []
+    if not pattern or not saying:
+        return []
 
     pat = pattern[0]
 
@@ -32,13 +31,10 @@ def pat_match_with_seg(pattern, saying):
     elif pat == saying[0]:
         return pat_match_with_seg(pattern[1:], saying[1:])
     else:
-        return fail
+        return None
 
 
 def segment_match(pattern, saying):
-    print(pattern)
-    print(saying)
-
     seg_pat, rest = pattern[0], pattern[1:]
     seg_pat = seg_pat.replace('?*', '?')
 
@@ -126,5 +122,37 @@ rule_responses = {
 }
 
 
-def get_response(saying, response_rules):
-    return subsitite(random.choice(rule_responses[response_rules]).split(), pat_to_dict(pat_match_with_seg(response_rules.split(), saying.split())))
+def change(s):
+    if any('\u4e00' <= i <= '\u9fa5' for i in s):
+        ret = []
+        s = list(jieba.cut(s))
+
+        for index, value in enumerate(s):
+            if value == '?' and s[index+1] == '*':
+                ret.append(f"?*{s[index+2]}")
+            elif value == '?':
+                ret.append(f"?{s[index+1]}")
+            elif '\u4e00' <= value <= '\u9fa5':
+                ret.append(value)
+            else:
+                raise Exception
+        return ret
+    return s.split()
+
+
+def get_response(saying, rules):
+    try:
+        for k in rules:
+            tmp = pat_match_with_seg(change(k), change(saying))
+            if tmp and tmp[0][1] != saying.split() and tmp[-1][0][-1] == change(k)[-1][-1]:
+                rule = rules[k]
+                break
+
+        return subsitite(random.choice(rule).split(), pat_to_dict(tmp))
+
+    except Exception as e:
+        return None
+
+
+r = get_response('我或许是', rule_responses)
+print(r)
