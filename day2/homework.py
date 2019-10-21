@@ -76,7 +76,7 @@ subway_lines_dict = make_subway_lines()
 
 def build_new_connection(subway_connection, subway_lines_dict):
     """
-    循环之前的连接信息，将连接的站台间不在同一地铁线上的去除掉
+    循环之前的连接信息，如果本站点与连接站点没有交集，则说明不在一条线上，则删除
     :param subway_connection: 之前的连接信息
     :param subway_lines_dict:  地铁站与地铁线的关系
     :return:
