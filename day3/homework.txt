@@ -1,0 +1,24 @@
+2.1 What conditions are required to make the BFS return the optimal solution ?
+非加权图，数据集不能是过于庞大的
+
+2.2 Is there a way to make DFS find the optimal solution ? (You may need to read some material about iterative DFS)
+首先定义一个所有符合要求的列表，找到了路径后不返回，将他加入刚才的列表中，等所有的递归全部完成后，使用该列表内所有符合要
+的列表从小到大排序，第一个就是最佳路径
+
+2.3 In what conditions BFS is a better choice than DFS and vice versa ?
+BFS寻找最佳路径较好，寻找深度小，但是内存用的高
+DFS在解决遍历问题比较好
+但是这两种搜索都属于无优化的暴力搜索，只能解决数据量小的问题
+
+
+2.4 When can we use machine learning ?
+智能语音机器人
+无人驾驶
+无人机
+文本分类
+
+2.5 What is the gradient of a function ?
+梯度是一个向量，表示函数沿着这个方向变化率最大
+
+2.6 How can we find the maximum value of a function using the information of gradient ?
+梯度上升法，该方法将一直被迭代执行，直到达到某个停止条件为止，比如迭代次数达到某个指定值或者算法达到某个可以允许的误差范围
