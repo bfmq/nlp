@@ -5,7 +5,7 @@
 
 import requests
 import json
-from day2.class_code import bfs, geo_distance
+from day2.class_code import bfs, geo_distance, bfs_2
 from collections import defaultdict
 from itertools import product
 from bs4 import BeautifulSoup
@@ -81,16 +81,31 @@ def build_new_connection(subway_connection, subway_lines_dict):
     :param subway_lines_dict:  地铁站与地铁线的关系
     :return:
     """
-    for subway_line in subway_connection:
-        for subway_connection_line in subway_connection.get(subway_line):
-            if not subway_lines_dict.get(subway_connection_line, set()) & subway_lines_dict.get(subway_line, set()):
-                subway_connection.get(subway_line).remove(subway_connection_line)
+    subway_new_connection = defaultdict(list)
+    for k, v_list in subway_connection.items():
+        for v in v_list:
+            k_set = subway_lines_dict.get(k, set())
+            v_set = subway_lines_dict.get(v, set())
+            if k_set & v_set:
+                subway_new_connection[k].append(v)
 
-    return subway_connection
+    return subway_new_connection
 
-
-subway_connection = build_new_connection(subway_connection, subway_lines_dict)
-# for i in subway_connection:
-#     print(f"{i}---{subway_connection[i]}")
-r = bfs(subway_connection, '宋家庄', '望京')
+subway_new_connection = build_new_connection(subway_connection, subway_lines_dict)
+r = bfs(subway_new_connection, '宋家庄', '望京')
 print(r)
+
+# # 但是实际情况中，我们不会只是为了到就可以
+# # 我们会选择坐的站点之间最短距离的、换成最少的、路过站最少的等等方式...
+#
+#
+# def sort_by_distance(pathes):
+#     def get_distance_of_path(path):
+#         distance = 0
+#         for i, _ in enumerate(path[:-1]):
+#             distance += get_subway_distance(path[i], path[i+1])
+#         return distance
+#     return sorted(pathes, key=get_distance_of_path)
+#
+# # r = bfs_2(subway_connection, '宋家庄', '望京', search_strategy=sort_by_distance)
+# # print(r)
