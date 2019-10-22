@@ -190,8 +190,17 @@ def bfs_by_change(data, start, end):
     :return:
     """
     def sort_by_change(pathes):
+        """
+        如果某站跟它后两站所处地铁线无交集，则说明他们中间那站换乘了
+        :param pathes:
+        :return:
+        """
         def get_change_of_path(path):
-            return len(reduce(lambda x, y: x | y, path))
+            change = 0
+            for i, _ in enumerate(path[:-2]):
+                if not subway_lines_dict.get(path[i], set()) & subway_lines_dict.get(path[i+2], set()):
+                    change += 1
+            return change
         return sorted(pathes, key=get_change_of_path)
 
     pathes = [[start]]      # 所有走过的路径列表
