@@ -4,11 +4,11 @@
 
 
 import requests
-import json
-from day2.class_code import bfs, geo_distance, bfs_2
+from day2.class_code import bfs, geo_distance
 from collections import defaultdict
 from itertools import product
 from bs4 import BeautifulSoup
+from functools import reduce
 
 
 with open('data', 'r', encoding='utf-8') as f:
@@ -93,19 +93,127 @@ def build_new_connection(subway_connection, subway_lines_dict):
 
 subway_new_connection = build_new_connection(subway_connection, subway_lines_dict)
 r = bfs(subway_new_connection, '宋家庄', '望京')
+# print(r)
+
+
+# 但是实际情况中，我们不会只是为了到就可以
+# 我们会选择坐的站点之间最短距离的、换成最少的、路过站最少的等等方式...
+# 不过由于数据集过大bfs跑得太慢了，所以只写了代码逻辑....本质就是修改排序的逻辑
+
+
+def bfs_by_distance(data, start, end):
+    """
+    按经历的所有地铁站之间距离总和最小计算路径
+    :param data:
+    :param start:
+    :param end:
+    :return:
+    """
+    def sort_by_distance(pathes):
+        def get_distance_of_path(path):
+            distance = 0
+            for i, _ in enumerate(path[:-1]):
+                distance += get_subway_distance(path[i], path[i + 1])
+            return distance
+        return sorted(pathes, key=get_distance_of_path)
+
+    pathes = [[start]]      # 所有走过的路径列表
+
+    while pathes:
+        path = pathes.pop(0)    # 取最之前的第一个列表
+        froniter = path[-1]     # 取该列表的最后一个元素节点城市作为需要被查询新路径的起点
+
+        successsors = data[froniter]    # 获取该元素节点城市连接的城市列表
+        for city in successsors:
+            if city in path:    # 环检测，如果该城市连接的城市已经在本列表里则为环，没必要继续循环
+                continue
+
+            new_path = path + [city]    # 新的路径列表
+            pathes.append(new_path)     # 更新所有走过的路径列表
+
+        pathes = sort_by_distance(pathes)    # 将所有走过的路径列表按某规则排序
+        print(pathes)
+        if pathes and (end == pathes[0][-1]):   # 如果排序后的第一个列表的最后位就是目标则次列表就是符合规则的路径
+            return pathes[0]
+
+    return None
+
+
+r = bfs_by_distance(subway_connection, '宋家庄', '望京')
 print(r)
 
-# # 但是实际情况中，我们不会只是为了到就可以
-# # 我们会选择坐的站点之间最短距离的、换成最少的、路过站最少的等等方式...
-#
-#
-# def sort_by_distance(pathes):
-#     def get_distance_of_path(path):
-#         distance = 0
-#         for i, _ in enumerate(path[:-1]):
-#             distance += get_subway_distance(path[i], path[i+1])
-#         return distance
-#     return sorted(pathes, key=get_distance_of_path)
-#
-# # r = bfs_2(subway_connection, '宋家庄', '望京', search_strategy=sort_by_distance)
-# # print(r)
+
+def bfs_by_len(data, start, end):
+    """
+    按经历的所有地铁站个数最少计算路径
+    :param data:
+    :param start:
+    :param end:
+    :return:
+    """
+    def sort_by_len(pathes):
+        def get_len_of_path(path):
+            return len(path)
+        return sorted(pathes, key=get_len_of_path)
+
+    pathes = [[start]]      # 所有走过的路径列表
+
+    while pathes:
+        path = pathes.pop(0)    # 取最之前的第一个列表
+        froniter = path[-1]     # 取该列表的最后一个元素节点城市作为需要被查询新路径的起点
+
+        successsors = data[froniter]    # 获取该元素节点城市连接的城市列表
+        for city in successsors:
+            if city in path:    # 环检测，如果该城市连接的城市已经在本列表里则为环，没必要继续循环
+                continue
+
+            new_path = path + [city]    # 新的路径列表
+            pathes.append(new_path)     # 更新所有走过的路径列表
+
+        pathes = sort_by_len(pathes)    # 将所有走过的路径列表按某规则排序
+        print(pathes)
+        if pathes and (end == pathes[0][-1]):   # 如果排序后的第一个列表的最后位就是目标则次列表就是符合规则的路径
+            return pathes[0]
+
+    return None
+
+# r = bfs_by_len(subway_connection, '宋家庄', '望京')
+# print(r)
+
+
+def bfs_by_change(data, start, end):
+    """
+    按经历的换乘线站个数最少计算路径
+    :param data:
+    :param start:
+    :param end:
+    :return:
+    """
+    def sort_by_change(pathes):
+        def get_change_of_path(path):
+            return len(reduce(lambda x, y: x | y, path))
+        return sorted(pathes, key=get_change_of_path)
+
+    pathes = [[start]]      # 所有走过的路径列表
+
+    while pathes:
+        path = pathes.pop(0)    # 取最之前的第一个列表
+        froniter = path[-1]     # 取该列表的最后一个元素节点城市作为需要被查询新路径的起点
+
+        successsors = data[froniter]    # 获取该元素节点城市连接的城市列表
+        for city in successsors:
+            if city in path:    # 环检测，如果该城市连接的城市已经在本列表里则为环，没必要继续循环
+                continue
+
+            new_path = path + [city]    # 新的路径列表
+            pathes.append(new_path)     # 更新所有走过的路径列表
+
+        pathes = sort_by_change(pathes)    # 将所有走过的路径列表按某规则排序
+        print(pathes)
+        if pathes and (end == pathes[0][-1]):   # 如果排序后的第一个列表的最后位就是目标则次列表就是符合规则的路径
+            return pathes[0]
+
+    return None
+
+# r = bfs_by_change(subway_connection, '宋家庄', '望京')
+# print(r)
