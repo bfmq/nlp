@@ -139,8 +139,8 @@ def bfs_by_distance(data, start, end):
     return None
 
 
-r = bfs_by_distance(subway_connection, '宋家庄', '望京')
-print(r)
+# r = bfs_by_distance(subway_connection, '宋家庄', '望京')
+# print(r)
 
 
 def bfs_by_len(data, start, end):
