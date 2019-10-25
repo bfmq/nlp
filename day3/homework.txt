@@ -1,24 +1,41 @@
-2.1 What conditions are required to make the BFS return the optimal solution ?
-非加权图，数据集不能是过于庞大的
+1. What's the *model*? why  all the models are wrong, but some are useful? (5 points)
+模型就是将复杂的数学过称封装好的函数，方便使用
+大多数模型都具有不一样类型的拟合或误差的度量
+有些有用的原因是因为模型的误差是我们可以接受的，他已经可以为我们创造出价值了
 
-2.2 Is there a way to make DFS find the optimal solution ? (You may need to read some material about iterative DFS)
-首先定义一个所有符合要求的列表，找到了路径后不返回，将他加入刚才的列表中，等所有的递归全部完成后，使用该列表内所有符合要
-的列表从小到大排序，第一个就是最佳路径
+2. What's the underfitting and overfitting? List the reasons that could make model overfitting or underfitting. (10 points)
+过拟合就是模型训练后过于完美的拟合了训练样本，当给出新数据时，很可能会产生较大误差
+欠拟合就是模型在训练后并没有学习到训练数据中的关系，当给出新数据时，预测的准确度低
+过拟合的原因：参数太多，模型复杂度过高、样本噪音干扰过大、建模样本选取有误
+欠拟合的原因：模型复杂度过低、特征量过少
 
-2.3 In what conditions BFS is a better choice than DFS and vice versa ?
-BFS寻找最佳路径较好，寻找深度小，但是内存用的高
-DFS在解决遍历问题比较好
-但是这两种搜索都属于无优化的暴力搜索，只能解决数据量小的问题
+3. What's the precision, recall, AUC, F1, F2score. What are they mainly target on? (12')
+他们都是评价模型性能的指标
+TP：实际为正，预测为正
+TN：实际为负，预测为负
+FP：实际为正，预测为负
+FN：实际为负，预测为正
+TP+FP：预测为正的个数
+FN+TN：预测为负的个数
+TP+FN：实际为正的个数
+FP+TN：实际为负的个数
+precision：TP/(TP+FP)
+recall：TP/(TP+FN)
+TPR：TP/(TP+FN)
+FPR：FP/(FP+TN)
+ROC：以FPR为横坐标，TPR为纵坐标做出的曲线图
+AUC：ROC曲线下的面积
+F-Score：(1 + β**2 ) * (precision * recall) / (β**2 * precision + recall)
+F1：当β=1时，即认为精确率与召回率都很重要
+F2：当β=2时，即认为召回率更重要一些
 
+4. Based on our course and yourself mind, what's the machine learning?  (8')
+人类在解决问题时的流程无外乎发现问题，理解问题，分析问题、解决问题
+机器学习其实也是自动化的思想，我希望机器（模型）它能够替我去做XXX，训练就是让他具备经验，预测就是让他去解决问题
+可能对应的就是：
+发现问题----预测模型
+理解问题，分析问题----分类模型
 
-2.4 When can we use machine learning ?
-智能语音机器人
-无人驾驶
-无人机
-文本分类
-
-2.5 What is the gradient of a function ?
-梯度是一个向量，表示函数沿着这个方向变化率最大
-
-2.6 How can we find the maximum value of a function using the information of gradient ?
-梯度上升法，该方法将一直被迭代执行，直到达到某个停止条件为止，比如迭代次数达到某个指定值或者算法达到某个可以允许的误差范围
+5. "正确定义了机器学习模型的评价标准(evaluation)， 问题基本上就已经解决一半". 这句话是否正确？你是怎么看待的？ (8‘)
+感觉就跟有明确的的目标就成功一半一样吧
+知道了衡量目标就等于知道了关键点，我们有目的的对应解决关键点跟漫无目的全部解决效率跟精度都是完全不能相提并论的
