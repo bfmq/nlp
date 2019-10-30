@@ -1,0 +1,21 @@
+1. What does a neuron compute?
+对输入进行加权求和后进行非线性计算
+
+2. Why we use non-linear activation funcitons in neural networks?
+这样才能将非线性引入到网络中，否则的话神经网络都会像单层感知器一样，因为这些层的总和叠加后仍然是一个线性函数
+
+3. What is the 'Logistic Loss' ?
+是交叉熵的一种特例，对应最后一层输出是sigmoid，也就是二分类所用的损失函数
+
+4. Assume that you are building a binary classifier for detecting if an image containing cats, which activation functions would you recommen using for the output layer ?
+A. ReLU对正数原样输出，负数直接置零
+B. Leaky ReLU对负数不设置0，而是有一条确定斜率的线
+C. sigmoid可以将0-1之间的取值解释成一个神经元的激活率
+D. tanh跟sigmoid形状是一样的，只是尺度和范围不同，在（-1，1）之间由x轴对称
+所以都可以
+
+5. Why we don't use zero initialization for all parameters ?
+当全都为0后，我们的模型每层之间的参数更新都是完全一致的，失去了的网络模型的意义，如同一个单一模型
+
+6. Can you implement the softmax function using python ?
+np.exp(z)/sum(np.exp(z))
