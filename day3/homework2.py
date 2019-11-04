@@ -38,7 +38,7 @@ def partial_derivative_k(x, y, y_hat):
     gradient = 0
     for x_i, y_i, y_hat_i in zip(list(x), list(y), list(y_hat)):
         gradient += (y_i-y_hat_i) * x_i
-    return -1 / n * gradient
+    return -1 * gradient / n
 
 
 def partial_derivative_b(y, y_hat):
@@ -52,7 +52,7 @@ def partial_derivative_b(y, y_hat):
     gradient = 0
     for y_i, y_hat_i in zip(list(y), list(y_hat)):
         gradient += (y_i-y_hat_i)
-    return -1 / n * gradient
+    return -1 * gradient / n
 
 
 def boston_loss():
