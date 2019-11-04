@@ -14,6 +14,7 @@ X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, 
 
 
 def softmax(z):
+    z -= np.max(z)
     return np.exp(z)/sum(np.exp(z))
 
 
