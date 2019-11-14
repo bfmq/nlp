@@ -3,144 +3,221 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from sklearn import datasets
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+
+np.random.seed(1)
 
 
-digits = datasets.load_digits()
+def conv_single_step(a_prev_slice, W, b):
+    '''
+    Apply one filter defined by parameters W on a single slice (a_slice_prev) of the output activation
+    of the previous layer.
+    Arguments:
+    a_prev_slice: slice of input data (shape=(f,f,n_C_prev))
+    W: Weight parameters contained in a window. (shape = (f,f,n_C_prev))
+    b: Bias parameters contained in a window. (shape=(1,1,1))
 
-X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.25)
+    Reutrns:
+
+    Z: a scalar value, the result of convolving the sliding window (W, b) on a slice x of the input data
+    '''
+    # Element-wise product
+    s = None
+
+    # Sum over s
+    Z = None
+
+    # Add bias b to z.
+    Z = None
+
+    return Z
+
+np.random.seed(1)
+a_slice_prev = np.random.randn(4, 4, 3)
+W = np.random.randn(4, 4, 3)
+b = np.random.randn(1, 1, 1)
+
+Z = conv_single_step(a_slice_prev, W, b)
+print("Z =", Z)
 
 
-def softmax(z):
-    z -= np.max(z)
-    return np.exp(z)/sum(np.exp(z))
-
-
-def initialize_parameters(dim):
+def zero_pad(X, pad):
     """
-    初始化参数w,b
-    :param dim: 特征维度数量
-    :return:
+    Pad with zeros all images of the dataset X. The padding is applied to the height and width of an image,
+    as illustrated in Figure 1.
+
+    Argument:
+    X: python numpy array of shape (m, n_H, n_W, n_C) representing a batch of m images
+    pad: integer, amount of padding around each image on vertical and horizontal dimensions
+
+    Returns:
+    X_pad: padded image of shape (m, n_H + 2*pad, n_W + 2*pad, n_C)
     """
 
-    w = np.random.randn(dim, 1)
-    b = np.random.randint(0, 10)
+    X_pad = None
 
-    assert (w.shape == (dim, 1))
-    assert (isinstance(b, float) or isinstance(b, int))
+    return X_pad
 
-    return w, b
+np.random.seed(1)
+x = np.random.randn(4, 3, 3, 2)
+x_pad = zero_pad(x, 2)
+print ("x.shape =\n", x.shape)
+print ("x_pad.shape =\n", x_pad.shape)
+print ("x[1,1] =\n", x[1,1])
+print ("x_pad[1,1] =\n", x_pad[1,1])
 
 
-# w, b = initialize_parameters(X_train.shape[1])
-
-
-def propagate(w, b, X, Y):
+def conv_forward(A_prev, W, b, hparameters):
     """
-    :param w: weights
-    :param b: bias
-    :param X: 训练集
-    :param Y: 训练标签
-    :return:
+    Implements the forward propagation for a convolution function
+
+    Arguments:
+    A_prev: output activations of the previous layer,
+        numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+    W: Weights, numpy array of shape (f, f, n_C_prev, n_C)
+    b: Biases, numpy array of shape (1, 1, 1, n_C)
+    hparameters: python dictionary containing "stride" and "pad"
+
+    Returns:
+    Z: conv output, numpy array of shape (m, n_H, n_W, n_C)
+    cache: cache of values needed for the conv_backward() function
     """
-    m = X.shape[0]
-    y = np.dot(X, w) + b
-    A = softmax(y)       # 预测值
 
-    Y = Y.reshape(-1, 1)
-    cost = np.mean((Y-A) ** 2)      # 与真实值的均方误差
+    # Get dimensions from A_prev's shape
+    (m, n_H_prev, n_W_prev, n_C_prev) = None
 
-    dA = (-2 / m) * cost * (A - X)
-    dw = np.dot(X.T, dA)
-    db = np.sum(dA, axis=0, keepdims=False)
+    # Get dimensions from W's shape
+    (f, f, n_C_prev, n_C) = None
 
-    assert (dw.shape == w.shape)
-    assert (db.dtype == float)
-    cost = np.squeeze(cost)
-    assert (cost.shape == ())
+    # Get information from "hparameters"
+    stride = None
+    pad = None
 
-    grads = {'dw': dw,
-             'db': db}
-    return grads, cost
+    # Compute the dimensions of the CONV output volume using the formula given above.
+    # Hint: use int() to apply the 'floor' operation.
+    n_H = None
+    n_W = None
 
-# grads, cost = propagate(w, b, X_train, y_train)
+    # Initialize the output volume Z with zeros.
+    Z = None
+
+    # Create A_prev_pad by padding A_prev
+    A_prev_pad = None
+
+    for i in range(None):  # loop over the batch of training examples
+        a_prev_pad = None  # Select ith training example's padded activation
+        for h in range(None):  # loop over vertical axis of the output volume
+            # Find the vertical start and end of the current "slice"
+            vert_start = None
+            vert_end = None
+
+            for w in range(None):  # loop over horizontal axis of the output volume
+                # Find the horizontal start and end of the current "slice"
+                horiz_start = None
+                horiz_end = None
+
+                for c in range(None):  # loop over channels (= #filters) of the output volume
+
+                    # Use the corners to define the (3D) slice of a_prev_pad (See Hint above the cell).
+                    a_slice_prev = None
+
+                    # Convolve the (3D) slice with the correct filter W and bias b, to get back one output neuron.
+                    weights = None
+                    biases = None
+                    Z[i, h, w, c] = None
+
+    # Making sure your output shape is correct
+    assert (Z.shape == (m, n_H, n_W, n_C))
+
+    # Save information in "cache" for the backprop
+    cache = (A_prev, W, b, hparameters)
+
+    return Z, cache
 
 
-def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
+np.random.seed(1)
+A_prev = np.random.randn(10,5,7,4)
+W = np.random.randn(3,3,4,8)
+b = np.random.randn(1,1,1,8)
+hparameters = {"pad" : 1,
+               "stride": 2}
+
+Z, cache_conv = conv_forward(A_prev, W, b, hparameters)
+print("Z's mean =\n", np.mean(Z))
+print("Z[3,2,1] =\n", Z[3,2,1])
+print("cache_conv[0][1][2][3] =\n", cache_conv[0][1][2][3])
+
+
+def pool_forward(A_prev, hparameters, mode="max"):
     """
-    优化器，在迭代次数中循环获取新的w、b，并按学习率优化后继续输入模型循环继续优化
-    :param w: weights
-    :param b: bias
-    :param X: 训练集
-    :param Y: 训练标签
-    :param num_iterations: 迭代次数
-    :param learning_rate: 学习率
-    :param print_cost: 是否调试打印
-    :return:
+    Implements the forward pass of the pooling layer
+
+    Arguments:
+    A_prev: Input data, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+    hparameters: python dictionary containing "f" and "stride"
+    mode: the pooling mode you would like to use, defined as a string ("max" or "average")
+
+    Returns:
+    A: output of the pool layer, a numpy array of shape (m, n_H, n_W, n_C)
+    cache: cache used in the backward pass of the pooling layer, contains the input and hparameters
     """
-    costs = []
 
-    for i in range(num_iterations):
+    # Get dimensions from the input shape
+    (m, n_H_prev, n_W_prev, n_C_prev) = A_prev.shape
 
-        grads, cost = propagate(w, b, X, Y)
+    # Get hyperparameters from "hparameters"
+    f = hparameters["f"]
+    stride = hparameters["stride"]
 
-        dw = grads['dw']
-        db = grads['db']
+    # Define the dimensions of the output
+    n_H = int(1 + (n_H_prev - f) / stride)
+    n_W = int(1 + (n_W_prev - f) / stride)
+    n_C = n_C_prev
 
-        w = w + (-1 * dw) * learning_rate
-        b = b + (-1 * db) * learning_rate
+    # Initialize output matrix A
+    A = np.zeros((m, n_H, n_W, n_C))
 
-        if i % 100 == 0:
-            costs.append(cost)
-            if print_cost:
-                print("Cost after iteration %i: %f" % (i, cost))
+    for i in range(None):  # loop over the training examples
+        for h in range(None):  # loop on the vertical axis of the output volume
+            # Find the vertical start and end of the current "slice" (≈2 lines)
+            vert_start = None
+            vert_end = None
 
-    params = {"w": w,
-              "b": b}
+            for w in range(None):  # loop on the horizontal axis of the output volume
+                # Find the vertical start and end of the current "slice" (≈2 lines)
+                horiz_start = None
+                horiz_end = None
 
-    grads = {"dw": dw,
-             "db": db}
+                for c in range(None):  # loop over the channels of the output volume
 
-    return params, grads, costs
+                    # Use the corners to define the current slice on the ith training example of A_prev, channel c. (≈1 line)
+                    a_prev_slice = None
 
+                    # Compute the pooling operation on the slice.
+                    # Use an if statement to differentiate the modes.
+                    # Use np.max and np.mean.
+                    if mode == "max":
+                        A[i, h, w, c] = None
+                    elif mode == "average":
+                        A[i, h, w, c] = None
 
-def predict(w, b, X):
-    """
-    用训练好的模型optimize的params预测测试集的标签
-    :param w: weights
-    :param b: bias
-    :param X: 测试集
-    :return: 预测标签
-    """
-    m = X.shape[0]
+    # Store the input and hparameters in "cache" for pool_backward()
+    cache = (A_prev, hparameters)
 
-    y = np.dot(X, w) + b
-    A = softmax(y)
+    # Making sure your output shape is correct
+    assert (A.shape == (m, n_H, n_W, n_C))
 
-    Y_prediction = A.T
-    assert (Y_prediction.shape == (1, m))
-    return Y_prediction
+    return A, cache
 
+np.random.seed(1)
+A_prev = np.random.randn(2, 5, 5, 3)
+hparameters = {"stride" : 1, "f": 3}
 
-def model(X_train, Y_train, X_test, Y_test, num_iterations, learning_rate, print_cost):
-    """
-    模型
-    :param X_train: 训练集
-    :param Y_train: 训练标签
-    :param X_test:  测试集
-    :param Y_test:  测试标签
-    :param num_iterations:  迭代数
-    :param learning_rate:  学习率
-    :param print_cost: 是否调试打印
-    :return:
-    """
-    w, b = initialize_parameters(X_train.shape[1])
-    params, grads, costs = optimize(w, b, X_train, Y_train, num_iterations, learning_rate, print_cost)
-    Y_prediction = predict(params['w'], params['b'], X_test)
-    return {"w":w, "b":b, "training_accuracy": None, "test_accuracy":None, "cost":costs}
-
-
-r = model(X_train, y_train, X_test, y_test, 500, 1e-3, False)
-# print(r)
+A, cache = pool_forward(A_prev, hparameters)
+print("mode = max")
+print("A.shape = " + str(A.shape))
+print("A =\n", A)
+print()
+A, cache = pool_forward(A_prev, hparameters, mode = "average")
+print("mode = average")
+print("A.shape = " + str(A.shape))
+print("A =\n", A)
