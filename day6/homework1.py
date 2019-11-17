@@ -46,7 +46,7 @@ datagen = ImageDataGenerator(
     horizontal_flip=True,
 )
 
-model.fit_generator(datagen.flow(x_train, y_train, batch_size=64), steps_per_epoch=1000, epochs=1, validation_data=(x_test,y_test), workers=100, verbose=1)
+model.fit_generator(datagen.flow(x_train, y_train, batch_size=64), steps_per_epoch=1000, epochs=100, validation_data=(x_test,y_test), workers=100, verbose=1)
 # model.save('cifar10_model.h5')
 scores = model.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', scores[0])
