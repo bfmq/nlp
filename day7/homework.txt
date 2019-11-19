@@ -1,0 +1,22 @@
+1. Compared to FNN, what is the biggest advantage of CNN?
+可以降低特征维度，层与层之间连接关系少，层之间会有共享参数，效率高
+这样就可以防止参数过于庞大造成过拟合
+
+2. Suppose your input is a 100 by 100 gray image, and you use a convolutional layer with 50 filters that are each 5x5. How many parameters does this hidden layer have (including the bias parameters)?
+5*5*50*1+1=751
+
+3. What are "local invariant" and "parameter sharing" ?
+局部不变性：经过简单的平移、旋转、尺度放缩，池化层在相同的位置依旧可以提取到相同的特征
+参数共享：某一层Feature Map都用同一套参数
+
+4. Why we use batch normalization ?
+因为特征之间的衡量维度并不统一，比如房屋面积肯定是几十几百，房间数最多不到20，直接用原始数据值去预测这两个特征对房价影响
+的模型就很不公平，无法将特征(房间数)本身的影响体现出来
+
+5. What problem does dropout try to solve ?
+依然还是解决参数、连接过多的问题，本质还是为了更加优化模型
+
+6. Is the following statement correct and why ? "Because pooling layers do not have parameters, they do not affect  the backpropagation(derivatives) calculation"
+错误，池化层也有反向传输的过称
+mean pooling就会把之前某个元素的梯度分成N份(之前用N平均的)，分配给上一层
+max pooling则是将梯度直接反传给记录max id的元素，其他元素则为0
