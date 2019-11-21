@@ -1,0 +1,116 @@
+{% extends "layout/_layout.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block page-body-title %}
+    <h3 class="page-title">
+
+		文本摘要
+
+	</h3>
+
+    <ul class="breadcrumb">
+
+        <li>
+
+            <i class="icon-file-text"></i>
+
+            <a href="#">文本处理</a>
+
+            <i class="icon-angle-right"></i>
+
+        </li>
+
+        <li><a href="#">文本摘要</a></li>
+
+    </ul>
+{% endblock %}
+
+{% block page-body-container %}
+
+    <div class="row-fluid">
+
+        <div class="span6">
+
+            <b>标题：</b>
+
+            <textarea style="height: 20px;width: 100%" id="textarea_input1"></textarea>
+
+            <b>正文：</b>
+
+            <textarea style="height: 390px;width: 100%" id="textarea_input2"></textarea>
+
+        </div>
+
+        <div class="span2">
+
+            <button class="btn green btn-block" style="margin-top: 180px" onclick="doRandom()">
+
+                <i class="m-icon-swapleft m-icon-white"></i>随机生成文本
+
+            </button>
+
+            <button class="btn blue btn-block" style="margin-top: 20px" onclick="doWork()">
+
+                处理<i class="m-icon-swapright m-icon-white"></i>
+
+            </button>
+
+        </div>
+
+        <div class="span4">
+
+            <b>摘要：</b>
+
+            <textarea style="height: 450px;width: 90%" id="textarea_output"></textarea>
+
+        </div>
+
+    </div>
+
+    <div style="height: 200px"></div>
+
+    <h3>你找到了彩蛋！</h3>
+
+    <object type="application/x-shockwave-flash" style="outline:none;" data="http://cdn.abowman.com/widgets/hamster/hamster.swf?" width="300" height="225"><param name="movie" value="http://cdn.abowman.com/widgets/hamster/hamster.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param></object>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        function doRandom() {
+            $.ajax({
+                url: '{% url "text_summary" %}',
+                type: 'PUT',
+                data: {},
+                dataType: 'json',
+                success: function (data) {
+                    $("#textarea_input1").val(data.message.title);
+                    $("#textarea_input2").val(data.message.content)
+                }
+            })
+        }
+
+        function doWork() {
+            $.ajax({
+                url: '{% url "text_summary" %}',
+                type: 'POST',
+                data: {
+                    'contents': $("#textarea_input2").val(),
+                    'title': $("#textarea_input1").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status){
+                        $("#textarea_output").html(data.message);
+                    } else {
+                        $("#textarea_output").html("error");
+                    }
+                }
+            })
+        }
+
+    </script>
+{% endblock %}

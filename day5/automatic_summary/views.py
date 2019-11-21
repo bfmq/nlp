@@ -1,0 +1,37 @@
+import random
+import json
+from django.views import View
+from django.shortcuts import render, HttpResponse
+from automatic_summary.core.get_sentences import SifEmbedding, df
+from plugins.duia.httpreturn import http_return as hr
+
+# Create your views here.
+
+
+class TextSummary(View):
+    def get(self, request):
+        return render(request, 'automatic_summary/text_summary.html')
+
+    def post(self, request):
+        # try:
+            contents = request.POST.get('contents', '')
+            title = request.POST.get('title', '')
+            sif_obj = SifEmbedding(contents, title)
+            r = sif_obj.get_summarization()
+            ret = hr(status=True, message=r, code=200)
+
+        # except Exception as e:
+        #     print(e)
+        #     ret = hr(status=False, message="输入有误", code=201)
+        #
+        # finally:
+            return HttpResponse(json.dumps(ret))
+
+    def put(self, request):
+        x = random.randrange(499)
+        data = {
+            'content': df['content'][x],
+            'title': df['title'][x],
+        }
+        ret = hr(status=True, message=data, code=200)
+        return HttpResponse(json.dumps(ret))
