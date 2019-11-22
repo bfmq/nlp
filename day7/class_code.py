@@ -12,6 +12,8 @@ import unicodedata
 import string
 import torch
 import torch.nn as nn
+import time
+import math
 
 
 def find_files(path):
@@ -106,6 +108,12 @@ def line_to_tensor(line):
 
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
+        """
+
+        :param input_size: 输入类型个数
+        :param hidden_size: 隐藏层个数
+        :param output_size: 输出类型个数
+        """
         super(RNN, self).__init__()
 
         self.hidden_size = hidden_size
@@ -124,29 +132,36 @@ class RNN(nn.Module):
     def initHidden(self):
         return torch.zeros(1, self.hidden_size)
 
+
 n_hidden = 128
 rnn = RNN(n_letters, n_hidden, n_categories)
-input = letter_to_tensor('A')
-hidden =torch.zeros(1, n_hidden)
 
-output, next_hidden = rnn(input, hidden)
-print(output)
-print(next_hidden)
-
-input = line_to_tensor('Albert')
 hidden = torch.zeros(1, n_hidden)
 
+# input = letter_to_tensor('A')
+# output, next_hidden = rnn(input, hidden)
+# print(input)
+# print(output)
+# print(next_hidden)
+
+input = line_to_tensor('Albert')
 output, next_hidden = rnn(input[0], hidden)
-print(output)
+# print(input)
+# print(output)
+# print(next_hidden)
+
 
 def category_from_output(output):
     top_n, top_i = output.topk(1)
     category_i = top_i[0].item()
     return all_categories[category_i], category_i
 
+# print(category_from_output(output))
+
 
 def sample(l):
     return l[random.randint(0, len(l) - 1)]
+
 
 def sample_trainning():
     category = sample(all_categories)
@@ -155,12 +170,13 @@ def sample_trainning():
     line_tensor = line_to_tensor(line)
     return category, line, category_tensor, line_tensor
 
-for i in range(10):
-    category, line, category_tensor, line_tensor = sample_trainning()
-    print('category =', category, '/ line =', line)
+# for i in range(10):
+#     category, line, category_tensor, line_tensor = sample_trainning()
+#     print('category =', category, '/ line =', line)
 
 criterion = nn.CrossEntropyLoss()
 learning_rate = 0.005 # If you set this too high, it might explode. If too low, it might not learn
+
 
 def train(category_tensor, line_tensor):
     hidden = rnn.initHidden()
@@ -179,8 +195,6 @@ def train(category_tensor, line_tensor):
 
     return output, loss.item()
 
-import time
-import math
 
 n_iters = 1000 # 这个数字你可以调大一些
 print_every = 500
@@ -190,6 +204,7 @@ plot_every = 100
 # Keep track of losses for plotting
 current_loss = 0
 all_losses = []
+
 
 def time_since(since):
     now = time.time()
@@ -216,6 +231,10 @@ for iter in range(1, n_iters + 1):
         all_losses.append(current_loss / plot_every)
         current_loss = 0
 
+# print(all_losses)
+# plt.plot(all_losses)
+# plt.show()
+
 def evaluate(line_tensor):
     hidden = rnn.initHidden()
 
@@ -223,6 +242,7 @@ def evaluate(line_tensor):
         output, hidden = rnn(line_tensor[i], hidden)
 
     return output
+
 
 def predict(input_line, n_predictions=3):
     print('\n> %s' % input_line)
