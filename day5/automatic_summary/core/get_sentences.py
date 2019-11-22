@@ -79,7 +79,11 @@ class SifEmbedding(object):
 
                 break
 
-        return f'{self.title}。' + ''.join(summarized)
+        # 处理标题结尾标点
+        if not self.title.endswith(('。', '.', '！', '!', '？', '?')):
+            self.title += '。'
+
+        return f'{self.title}' + ''.join(summarized)
 
         # # 当前长度超过最大设定长度，则循环结束，完成选定句子的集合
         # for _, sentence in self.sentences_corr_list:
