@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from automatic_summary import views
+from automatic_summary import views as automatic_summary_views
 
 urlpatterns = [
-    url(r'^text_summary/', views.TextSummary.as_view(), name='text_summary'),
+    url(r'^$', automatic_summary_views.Index.as_view(), name='index'),
+    url(r'^asteroids/$', automatic_summary_views.Asteroids.as_view(), name='asteroids'),
+    url(r'^text_summary/$', automatic_summary_views.TextSummary.as_view(), name='text_summary'),
 ]

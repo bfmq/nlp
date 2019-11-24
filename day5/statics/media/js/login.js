@@ -48,14 +48,14 @@
 // 	            },
 //
 // 	            submitHandler: function (form) {
-// 	                window.location.href = "index.html";
+// 	                window.location.href = "asteroids.html";
 // 	            }
 // 	        });
 //
 // 	        $('.login-form input').keypress(function (e) {
 // 	            if (e.which == 13) {
 // 	                if ($('.login-form').validate().form()) {
-// 	                    window.location.href = "index.html";
+// 	                    window.location.href = "asteroids.html";
 // 	                }
 // 	                return false;
 // 	            }
@@ -98,14 +98,14 @@
 // 	            },
 //
 // 	            submitHandler: function (form) {
-// 	                window.location.href = "index.html";
+// 	                window.location.href = "asteroids.html";
 // 	            }
 // 	        });
 //
 // 	        $('.forget-form input').keypress(function (e) {
 // 	            if (e.which == 13) {
 // 	                if ($('.forget-form').validate().form()) {
-// 	                    window.location.href = "index.html";
+// 	                    window.location.href = "asteroids.html";
 // 	                }
 // 	                return false;
 // 	            }
@@ -174,7 +174,7 @@
 // 	            },
 //
 // 	            submitHandler: function (form) {
-// 	                window.location.href = "index.html";
+// 	                window.location.href = "asteroids.html";
 // 	            }
 // 	        });
 //

@@ -105,7 +105,7 @@ var Login = function () {
 	        $('.forget-form input').keypress(function (e) {
 	            if (e.which == 13) {
 	                if ($('.forget-form').validate().form()) {
-	                    window.location.href = "index.html";
+	                    window.location.href = "asteroids.html";
 	                }
 	                return false;
 	            }
@@ -174,7 +174,7 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	                window.location.href = "index.html";
+	                window.location.href = "asteroids.html";
 	            }
 	        });
 
