@@ -70,12 +70,11 @@ def propagate(w, b, X, Y):
     A = sigmoid(y)       # 预测值
     # print(A)
 
-    Y = Y.reshape(-1, 1)
-    cost = np.mean((Y-A) ** 2)      # 与真实值的均方误差
+    Y = Y.reshape(1, -1)
+    cost = -1/m * np.sum(Y * np.log(A) + (1-Y) * np.log(1-A))      # 与真实值的均方误差
 
-    dA = A * (1 - A) * (-2 / m) * cost
-    dw = np.dot(X.T, dA)
-    db = np.sum(dA, axis=0, keepdims=False)
+    dw = 1/m * np.dot((A-Y), X).T
+    db = 1/m * np.sum(A-Y)
 
     assert (dw.shape == w.shape)
     assert (db.dtype == float)

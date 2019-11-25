@@ -50,11 +50,10 @@ def propagate(w, b, X, Y):
     A = softmax(y)       # 预测值
 
     Y = Y.reshape(-1, 1)
-    cost = np.mean((Y-A) ** 2)      # 与真实值的均方误差
+    cost = -1/m * np.sum(y * np.log(A))      # 与真实值的均方误差
 
-    dA = (-2 / m) * cost * (A - X)
-    dw = np.dot(X.T, dA)
-    db = np.sum(dA, axis=0, keepdims=False)
+    dw = 1/m * np.dot(X.T, (A - y))
+    db = 1/m * np.sum(A - y, axis=0).reshape(1, -1)
 
     assert (dw.shape == w.shape)
     assert (db.dtype == float)
