@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="672f9b4e-8b84-4a35-8b6a-7381a5af6d10" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day5/.idea/day5.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day5/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day5/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day5/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day5/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day5/statics/asteroids" afterPath="$PROJECT_DIR$/day5/statics/asteroids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day4/homework1.py" afterPath="$PROJECT_DIR$/day4/homework1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day4/homework2.py" afterPath="$PROJECT_DIR$/day4/homework2.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,8 +50,8 @@
       <file leaf-file-name="homework2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/day4/homework2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+            <state relative-caret-position="336">
+              <caret line="58" column="30" lean-forward="true" selection-start-line="58" selection-start-column="30" selection-end-line="58" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -185,11 +177,6 @@
             <path>
               <item name="nlp" type="b2602c69:ProjectViewProjectNode" />
               <item name="nlp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nlp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nlp" type="462c0819:PsiDirectoryNode" />
-              <item name="day4" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -685,8 +672,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/day4/homework2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+        <state relative-caret-position="336">
+          <caret line="58" column="30" lean-forward="true" selection-start-line="58" selection-start-column="30" selection-end-line="58" selection-end-column="30" />
           <folding />
         </state>
       </provider>
