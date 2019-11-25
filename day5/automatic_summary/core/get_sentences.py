@@ -245,7 +245,7 @@ class SifEmbedding(object):
         new_corr_score_list = copy.deepcopy(corr_score_list)
         corr_score_list = [score for score, _ in corr_score_list]
         length = len(new_corr_score_list)
-        need_num = 5 if self.text_length >= 2400 else 3
+        need_num = 2 if self.text_length >= 2400 else 1
 
         # 太短了就需要再平滑了
         if length <= need_num * 2 + 1: return new_corr_score_list
