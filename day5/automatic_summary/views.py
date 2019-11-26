@@ -41,7 +41,7 @@ class TextSummary(View):
             ret = hr(status=True, message=r, code=200)
 
         except Exception as e:
-            ret = hr(status=False, message="文本必须输入!", code=201)
+            ret = hr(status=False, message="请输入文本...", code=201)
 
         finally:
             return HttpResponse(json.dumps(ret))
