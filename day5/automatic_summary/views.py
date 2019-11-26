@@ -34,14 +34,14 @@ class TextSummary(View):
         try:
             contents = request.POST.get('contents')
             title = request.POST.get('title')
-            if not contents or not title:
+            if not contents:
                 raise Exception
             sif_obj = SifEmbedding(contents, title)
             r = sif_obj.get_summarization()
             ret = hr(status=True, message=r, code=200)
 
         except Exception as e:
-            ret = hr(status=False, message="请输入标题与文本!", code=201)
+            ret = hr(status=False, message="文本必须输入!", code=201)
 
         finally:
             return HttpResponse(json.dumps(ret))

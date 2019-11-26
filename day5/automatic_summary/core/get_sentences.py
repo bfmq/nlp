@@ -47,7 +47,7 @@ class SifEmbedding(object):
             self.sub_sentences, self.sub_punctuates = self.split_sentences(self.text)
             self.sub_sentences_vec = self.sif_sentence_embedding()
             self.sentences_vec = self.get_weight_average(self.text)
-            self.title_vec = self.get_weight_average(self.title)
+            self.title_vec = self.get_weight_average(self.title) if self.title else []
             self.sentences_corr_list = self.get_sentences_corr()
 
     def get_summarization(self):
@@ -80,10 +80,11 @@ class SifEmbedding(object):
                 break
 
         # 处理标题结尾标点
-        if not self.title.endswith(('。', '.', '！', '!', '？', '?')):
+        if self.title and not self.title.endswith(('。', '.', '！', '!', '？', '?')):
             self.title += '。'
-
-        return f'{self.title}' + ''.join(summarized)
+            return f'{self.title}' + ''.join(summarized)
+        else:
+            return ''.join(summarized)
 
         # # 当前长度超过最大设定长度，则循环结束，完成选定句子的集合
         # for _, sentence in self.sentences_corr_list:
@@ -193,7 +194,7 @@ class SifEmbedding(object):
             # 分别获取于正文本、标题之间的得分，按权重得到最后分数
             sub_sentence_vec = self.sub_sentences_vec[i, :]
             cosine_score_by_text = cosine(self.sentences_vec, sub_sentence_vec)
-            cosine_score_by_title = cosine(self.title_vec, sub_sentence_vec)
+            cosine_score_by_title = cosine(self.title_vec, sub_sentence_vec) if self.title_vec else 0
             cosine_score = 0.9 * cosine_score_by_text + 0.1 * cosine_score_by_title
             if not isnan(cosine_score):  # 这里必须用isnan才能判断nan
                 corr_score_list.append([cosine_score, self.sub_sentences[i]])
@@ -223,9 +224,10 @@ class SifEmbedding(object):
         获取关键字，由吕汶颖提供
         :return: 关键字列表
         """
-        text_vec = self.remove_pca(self.title_vec.reshape(1, -1))
+        text_vec = self.remove_pca(self.title_vec.reshape(1, -1)) \
+            if self.title_vec else self.remove_pca(self.sentences_vec.reshape(1, -1))
 
-        words = cut(self.title).split()
+        words = cut(self.title).split() if self.title else self.text
         words = [w for w in words if w in model]
 
         corr_words_dict = {w: cosine(model.wv[w], text_vec) for w in words}
