@@ -245,13 +245,14 @@ class SifEmbedding(object):
         new_corr_score_list = copy.deepcopy(corr_score_list)
         corr_score_list = [score for score, _ in corr_score_list]
         length = len(new_corr_score_list)
-        need_num = 2 if self.text_length >= 2400 else 1
+        need_num = 5 if self.text_length >= 2400 else 3
 
         # 太短了就需要再平滑了
         if length <= need_num * 2 + 1: return new_corr_score_list
 
         for i in range(length):
-            weigth_list = [(i * 0.05 + 1) if i < 0 else (-(i) * 0.05 + 1) for i in range(-(need_num), need_num + 1)]
+            # weigth_list = [(i * 0.05 + 1) if i < 0 else (-(i) * 0.05 + 1) for i in range(-(need_num), need_num + 1)]
+            weigth_list = [(1-i**2*0.05) for i in range(-(need_num), need_num + 1)]
 
             start = i - need_num
             end = i + need_num + 1
