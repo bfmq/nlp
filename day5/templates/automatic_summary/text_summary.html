@@ -103,11 +103,7 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-                    if (data.status){
-                        $("#textarea_output").html(data.message);
-                    } else {
-                        $("#textarea_output").html("error");
-                    }
+                    $("#textarea_output").html(data.message);
                 }
             })
         }
