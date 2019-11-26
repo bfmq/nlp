@@ -1,0 +1,14 @@
+1. 尝试在我们的RNN模型中添加更多layers，然后观察Loss变化
+Loss变化并不完全随layers增多而优化，且越深的layers越慢，感觉512即可
+
+
+2. 将原始的RNN模型改成nn.LSTM和nn.GRU， 并且改变 `n_iters = 1000 ` 这个值，观察其变化
+Loss变化大体没区别，肉眼看曲线图感觉差不多
+
+
+3. 把该RNN模型变成多层RNN模型，观察Loss的变化
+感觉就跟上次作业的自己随意加层测试一个意思，并不会因为层多就变得好，还是要设置的合理
+
+
+4. Pytorch里边常用nn.NLLoss来代替crossentropy，将criterion改为nn.NLLoss，观察变化
+Loss变化大体没区别，但是感觉nn.NLLLoss()跑的慢一点
