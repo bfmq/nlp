@@ -76,6 +76,7 @@ position embeddings：是因为 Transformer 模型不能记住时序，所以人
 
 
 14. Briely descibe how to use BERT in other NLP tasks.
+同11，这个问题问的是什么意思啊？
 
 
 15. What are the differences between these three models: GPT, BERT, GPT2.
