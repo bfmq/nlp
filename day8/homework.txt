@@ -1,14 +1,84 @@
-1. 尝试在我们的RNN模型中添加更多layers，然后观察Loss变化
-Loss变化并不完全随layers增多而优化，且越深的layers越慢，感觉512即可
+1.  What is autoencoder?
+autoencoder是一种无监督的学习算法，主要用于数据的降维或者特征的抽取，在深度学习中，autoencoder可用于在训练阶段开始前，确定权重矩阵的初始值。
+我们不知道初始权重矩阵对训练的影响也不知道后期它是在如何变化，因此我们希望初始化的权重矩阵可以较好的保留数据原始特征。
+如果编码后的数据能够较为容易地通过解码恢复成原始数据，我们则认为较好的保留了数据信息。
+autoencoder通过神经网络进行预训练，从而确定的初始值。其目标是让输入值等于输出值。
 
 
-2. 将原始的RNN模型改成nn.LSTM和nn.GRU， 并且改变 `n_iters = 1000 ` 这个值，观察其变化
-Loss变化大体没区别，肉眼看曲线图感觉差不多
+2. What are the differences between greedy search and beam search?
+greedy search本质就是贪心算法
+beam search有点动态规划的意思，只不过是N叉树不取全部
+动态规划是从所有情况里选最优解
+贪心算法是选单步最优解，它不适用于选择之间有联系性的问题
 
 
-3. 把该RNN模型变成多层RNN模型，观察Loss的变化
-感觉就跟上次作业的自己随意加层测试一个意思，并不会因为层多就变得好，还是要设置的合理
+3. What is the intuition of attention mechanism?
+Attention机制的本质来自于人类视觉注意力机制。人们视觉在感知东西的时候一般不会是一个场景从到头看到尾每次全部都看，而往往是根据需求观察注意特定的一部分。
+而且当人们发现一个场景经常在某部分出现自己想观察的东西时，人们会进行学习在将来再出现类似场景时把注意力放到该部分上。
 
 
-4. Pytorch里边常用nn.NLLoss来代替crossentropy，将criterion改为nn.NLLoss，观察变化
-Loss变化大体没区别，但是感觉nn.NLLLoss()跑的慢一点
+4. What is the disadvantage of word embeding introduced in previous lectures ?
+不能表示一词多义
+没有顺序性
+没有其他词影响的权重
+
+
+5. What is the architecture of ELMo model. (A brief description is enough)
+使用的是一个双向的LSTM语言模型，由一个前向和一个后向语言模型构成，目标函数就是取这两个方向语言模型的最大似然。
+
+
+6. Compared to RNN,  what is the advantage of Transformer ?
+语义特征提取能力强
+长距离特征捕获能力强
+并行计算能力及运算效率高
+任务综合特征抽取能力好
+
+
+7. Why we use layer normalizaiton instead of batch normalization in Transformer ?
+因为做batch normalization是没有意义的
+句子与句子之间本身没有去比较的意义，每个句子内的词与词之间才有联系
+再者句子的长度是不一的，无法进行batch normalization
+
+
+8. Why we need position embedding in Transformer ?
+首先自注意力层本身不带位置表示，同一个个句子里同一个词汇的向量是一样的
+作者提出的方法是，在Transformer中加入一组可训练的嵌入表示，从而让输出带有一定的顺序信息。
+这一嵌入表示在计算第i个词和第j个词之间的注意力权重和注意力值的时候会用到。
+他们代表了第i个词和第j个词之间的距离（间隔多少个词），因此将这种方法称为相对位置表示（RPR）。
+
+
+9. Briefly describe what is self-attention and what is multi-head attention?
+multi-head attention可以简单的说成是多个self-attention的组合结果
+self-attention
+训练qkv三个矩阵，使用单词的q乘以每个单词的k，得到的值进行softmax后，使用softmax后的值乘以每个单词的v，最后加和
+
+
+10. What is the basic unit of GPT model?
+Transformer
+
+
+11. Briefly descibe how to use GPT in other NLP tasks?
+将预训练模型当作一个特征提取器，直接将预训练模型的输出层去掉，然后使用去掉输出层之后的最后一层输出作为特征
+也可以使用中间的某些层
+将预训练模型整体接入自己的模型，继而重新在新的数据集上整体重新训练
+
+
+12. What is masked language model in BERT ?
+会随机15%的词汇80%替换成MASK，10%替换成句子当中其他任意词汇，10%继续保留
+
+
+13. What are the inputs of BERT ?
+token embeddings, segmentation embeddings 和position embeddings 的总和
+token embeddings：模型中关于词最主要的信息
+segmentation embeddings：是因为BERT里面的下一句的预测任务，所以会有两句拼接起来，上句与下句，上句有上句段向量，下句则有下句段向量，
+也就是图中A与B。此外，句子末尾都有加[SEP]结尾符，两句拼接开头有[CLS]符
+position embeddings：是因为 Transformer 模型不能记住时序，所以人为加入表示位置的向量
+
+
+14. Briely descibe how to use BERT in other NLP tasks.
+
+
+15. What are the differences between these three models: GPT, BERT, GPT2.
+GPT2是GPT的升级加强版本，用的训练集更大，层数更深
+GPT、GPT2是单向的
+BERT是双向，有新的Masked语言模型以及输入不同
