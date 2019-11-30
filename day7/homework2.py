@@ -98,7 +98,7 @@ def line_to_tensor(line):
     return tensor
 
 
-class RNN(nn.LSTM):
+class RNN(nn.GRU):
     def __init__(self, input_size, hidden_size, output_size):
         """
 
