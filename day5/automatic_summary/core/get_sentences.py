@@ -86,28 +86,6 @@ class SifEmbedding(object):
         else:
             return ''.join(summarized)
 
-        # # 当前长度超过最大设定长度，则循环结束，完成选定句子的集合
-        # for _, sentence in self.sentences_corr_list:
-        #     if current_sen < max_count:
-        #         current_sen += len(sentence)
-        #         selected_sen.add(sentence)
-        #     else:
-        #         break
-        #
-        # # 有标题异常通顺~由吕汶颖发现
-        # summarized = [f'{self.title}。']
-        # # summarized = [f'{self.title}。'] if ('原标题' or '核心提示' or '新闻分析' or '沙漠雄鹰') not in self.text else []
-        #
-        # # 按句子原本顺序添加句子与其标点
-        # for i in range(len(self.sub_sentences)):
-        #     if self.sub_sentences[i] in selected_sen:
-        #         summarized.append(f'{self.sub_sentences[i]}{self.sub_punctuates[i]}')
-        #
-        # # 处理最后的标点
-        # if not summarized[-1].endswith(('。', '.', '！', '!', '？', '?')):
-        #     summarized[-1] = summarized[-1][:-1] + '。'
-        # return ''.join(summarized)
-
     def split_sentences(self, text, p='[。，,：!！？?;；]', filter_p='\s+'):
         """
         切分文本
@@ -253,7 +231,6 @@ class SifEmbedding(object):
         if length <= need_num * 2 + 1: return new_corr_score_list
 
         for i in range(length):
-            # weigth_list = [(i * 0.05 + 1) if i < 0 else (-(i) * 0.05 + 1) for i in range(-(need_num), need_num + 1)]
             weigth_list = [(1-i**2*0.05) for i in range(-(need_num), need_num + 1)]
 
             start = i - need_num
@@ -276,18 +253,5 @@ class SifEmbedding(object):
                 end = length
 
             new_corr_score_list[i][0] = np.mean(np.multiply(np.array(corr_score_list[start:end]), np.array(weigth_list)))
-
-        # # 自己，自己前后各一位取分值平均
-        # for i in range(length):
-        #     if i == 0:
-        #         new_corr_score_list[i][0] = np.mean([corr_score_list[i + x][0] for x in range(3)])
-        #     elif i == 1:
-        #         new_corr_score_list[i][0] = np.mean([corr_score_list[i + x][0] for x in range(-1, 2)])
-        #     elif i == length - 1:
-        #         new_corr_score_list[i][0] = np.mean([corr_score_list[i + x][0] for x in range(-2, 1)])
-        #     elif i == length - 2:
-        #         new_corr_score_list[i][0] = np.mean([corr_score_list[i + x][0] for x in range(-1, 2)])
-        #     else:
-        #         new_corr_score_list[i][0] = np.mean([corr_score_list[i + x][0] for x in range(-1, 2)])
 
         return new_corr_score_list
