@@ -36,9 +36,9 @@ def train(model, data):
 
 # 74447
 
-# for i in range(8, 25):
-#     model = word2vec.Word2Vec.load("../models/wiki_and_content/wiki_and_content.model")
-#     data = df['content'][i*3000:(i+1)*3000]
-#     train(model, data)
-#     model.save('../models/wiki_and_content/wiki_and_content.model')
-#     print(i)
+for i in range(8, 25):
+    model = word2vec.Word2Vec.load("../models/wiki_and_content/wiki_and_content.model")
+    data = df['content'][i*3000:(i+1)*3000]
+    train(model, data)
+    model.save('../models/wiki_and_content/wiki_and_content.model')
+    print(i)
