@@ -17,6 +17,6 @@ with open('../../data/wiki_and_content', 'w+', encoding='utf-8') as f:
 
 
 wiki_file = '../../data/wiki_and_content'
-model = Word2Vec(LineSentence(wiki_file), size=200, sg=1, workers=multiprocessing.cpu_count())
+model = Word2Vec(LineSentence(wiki_file), size=200, sg=1, window=10,workers=multiprocessing.cpu_count())
 model.save('../../models/wiki/news.model')
 model.wv.save_word2vec_format('../../models/wiki/news.model.wv.vectors.npy')
