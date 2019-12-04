@@ -4,44 +4,44 @@
 
 
 import jieba, os, re
+from gensim.corpora import WikiCorpus
 
 
-def get_stopwords():
-    stopword_set = set()
-    with open("../../data/stop/stopwords.txt", 'r', encoding="utf-8") as stopwords:
-        for stopword in stopwords:
-            stopword_set.add(stopword.strip("\n"))
-    return stopword_set
+def get_wiki_text():
+    outp = "../../data/wiki/wiki.zh.txt"
+    inp = "../../data/wiki/zhwiki-20190720-pages-articles-multistream.xml.bz2"
 
+    space = " "
 
-def parse_zhwiki(read_file_path, save_file_path):
-    regex_str = "[^<doc.*>$]|[^</doc>$]"
-    file = open(read_file_path, "r", encoding="utf-8")
-    output = open(save_file_path, "w+", encoding="utf-8")
-    content_line = file.readline()
-    stopwords = get_stopwords()
-    article_contents = ""
-    while content_line:
-        match_obj = re.match(regex_str, content_line)
-        content_line = content_line.strip("\n")
-        if len(content_line) > 0:
-            if match_obj:
-                # 使用jieba进行分词
-                words = jieba.cut(content_line, cut_all=False)
-                for word in words:
-                    if word not in stopwords:
-                        article_contents += word + " "
-            else:
-                if len(article_contents) > 0:
-                    output.write(article_contents + "\n")
-                    article_contents = ""
-        content_line = file.readline()
+    output = open(outp, 'w', encoding='utf-8')
+
+    # gensim里的维基百科处理类WikiCorpus
+    wiki = WikiCorpus(inp, lemmatize=False, dictionary=[])
+
+    # 通过get_texts将维基里的每篇文章转换位1行text文本，并且去掉了标点符号等内容
+    for text in wiki.get_texts():
+        output.write(space.join(text) + "\n")
     output.close()
 
 
-def generate_corpus():
-    save_path = zhwiki_path = "../../data/wiki/wiki"
-    for i in range(3):
-        file_path = os.path.join(zhwiki_path, str("zh_wiki_0%s_jt" % str(i)))
-        parse_zhwiki(file_path, os.path.join(save_path, "wiki_corpus0%s" % str(i)))
+def remove_words():
+    output = open('data/wiki.zh.txt', 'w', encoding='utf-8')
+    inp = open('data/wiki.zh.zh.txt', 'r', encoding='utf-8')
+
+    for line in inp.readlines():
+        ss = re.findall('[\n\s*\r\u4e00-\u9fa5]', line)
+        output.write("".join(ss))
+
+
+def separate_words():
+    output = open('data/wiki.corpus.txt', 'w', encoding='utf-8')
+    inp = open('data/wiki.zh.txt', 'r', encoding='utf-8')
+
+    for line in inp.readlines():
+        seg_list = jieba.cut(line.strip())
+        output.write(' '.join(seg_list) + '\n')
+
+# get_wiki_text()
+# remove_words()
+# separate_words()
 
