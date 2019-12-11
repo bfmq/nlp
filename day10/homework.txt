@@ -1,0 +1,28 @@
+﻿1. What is independent assumption in Naive bayes ?
+就是假设特征之间并无联系，以是否打球为例，认为天气与打球、温度与打球是各自影响的关系
+
+2. What is MAP(maximum a posterior) and ML(maximum likelihood) ?
+最大后验概率就是按贝叶斯公式推导出从所有数据中学习到的最有可能函数
+h MAP = arg max P(h|D) = arg max P(D|h)P(h)/P(D)
+P(D)是常数则h MAP = arg max P(D|h)P(h)
+
+最大似然则是假设先验知识P(h)是相同的则h ML = arg max P(D|h)
+如果是不一样的则h ML = h MAP
+
+
+3. What is support vector in SVM?
+距离超平面最近的几个训练样本点被称为支持向量
+超平面参数完全由这几个点确定，其他点位置改变不影响超平面参数
+
+4. What is the intuition behind SVM ?
+最佳分类器将是超平面与两个类相等的距离（无偏好）。
+如果类和超平面之间的距离最大，那将会好得多。
+
+5. Shortly describ what 'random' means in random forest ?
+样本选取时随机
+决策树的训练过程中引入随机属性选择
+
+6. What cariterion does XGBoost use to find the best split point in a tree ?
+第一种“Exact Greedy Algorithm for Split Finding”，是一种利用穷举法选择最佳的分裂节点
+第二种“Approximate Algorithm for Split Finding”，通过加权分位数方法近似选择最佳的分裂节点
+第三种“Sparsity-aware Split Finding”，针对稀疏特征的分裂点选择法
