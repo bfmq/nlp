@@ -8,7 +8,7 @@ import pandas as pd
 
 
 file_path = "./data/"
-file_name = 'sqlResult_1558435.csv'     # sqlResult_1558435太大了，处理完就删除了
+file_name = 'sqlResult_1558435.csv'     # data目录太大了，处理完就删除了
 new_file_name = 'content.csv'
 
 all_pd = pd.read_csv(file_path+file_name)

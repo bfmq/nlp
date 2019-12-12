@@ -51,6 +51,7 @@ knn9_score = accuracy_score(Y, knn9_predict) * 100
 knn5_score = accuracy_score(Y, knn5_predict) * 100
 rdf_score = accuracy_score(Y, rdf_predict) * 100
 
+# 这里svm其实已经分不出类了
 bar_x = ['svm', 'ada50', 'ada100', 'knn9', 'knn5', 'rdf']
 bar_y = [svm_score, ada50_score, ada100_score, knn9_score, knn5_score, rdf_score]
 plt.bar(bar_x, bar_y, color='g', align='center')
