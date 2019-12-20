@@ -11,14 +11,17 @@ from plugins.duia.httpreturn import http_return as hr
 
 class Index(View):
     def get(self, request):
-        city_url = 'http://ip.taobao.com/service/getIpInfo.php?ip='
-        remote_addr = request.META.get('REMOTE_ADDR', '123.114.2.69')
-        if remote_addr == '127.0.0.1':
-            remote_addr = '123.114.2.69'
+        try:
+            city_url = 'http://ip.taobao.com/service/getIpInfo.php?ip='
+            remote_addr = request.META.get('REMOTE_ADDR')
+            city_response = requests.get(city_url+remote_addr).json()
+            country, region = city_response['data']['country'], city_response['data']['region']
 
-        city_response = requests.get(city_url+remote_addr).json()
-        country, region = city_response['data']['country'], city_response['data']['region']
-        return render(request, 'layout/layout_promo.html', locals())
+        except Exception as e:
+            country, region = '中国', '北京'
+
+        finally:
+            return render(request, 'layout/layout_promo.html', locals())
 
 
 class Asteroids(View):

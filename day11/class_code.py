@@ -143,9 +143,11 @@ def tokens(text):
     return re.findall('[a-z]+', text.lower())
 
 
-CHINESE_PINYIN_CORPYS = chinese_to_pinyin(CHINESE_CHARATERS)
-PINYIN_COUNT = Counter(tokens(CHINESE_PINYIN_CORPYS))
-json.dump(PINYIN_COUNT, open('./PINYIN_COUNT.json', 'w', encoding='utf-8'))
+# CHINESE_PINYIN_CORPYS = chinese_to_pinyin(CHINESE_CHARATERS)
+# json.dump(tokens(CHINESE_PINYIN_CORPYS), open('./CHINESE_PINYIN.json', 'w', encoding='utf-8'))
+# PINYIN_COUNT = Counter(tokens(CHINESE_PINYIN_CORPYS))
+# json.dump(PINYIN_COUNT, open('./PINYIN_COUNT.json', 'w', encoding='utf-8'))
+PINYIN_COUNT = json.load(open('./PINYIN_COUNT.json', encoding='utf-8'))
 
 
 def correct(word):
