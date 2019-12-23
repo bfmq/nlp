@@ -97,7 +97,7 @@ print(r)
 flags = ('n', 'nr', 'ns', 'nt', 'eng', 'v', 'd')
 news = data["content"][:100]
 stop_words = []
-with open('../day5/stop/stopword.txt', encoding='utf-8') as f:
+with open('../day5/data/stop/stopword.txt', encoding='utf-8') as f:
     for word in f.readlines():
         stop_words.append(word.strip())
 
