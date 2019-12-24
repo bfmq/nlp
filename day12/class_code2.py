@@ -2,22 +2,17 @@
 # __author__ = '北方姆Q'
 # -*- coding: utf-8 -*-
 
-
-import pyltp
-from gensim.models import Word2Vec
-from pyltp import Segmentor
-import jieba
-from gensim.models.word2vec import LineSentence
 from pyltp import SentenceSplitter,NamedEntityRecognizer,Postagger,Parser,Segmentor
-from gensim import models
-import numpy as np
 import pandas as pd
+import random
 
 data_source = "../day5/data/export_sql_1558435/sqlResult_1558435.csv"
 data = pd.read_csv(data_source, encoding='utf-8')
 data = data.fillna('')
-news = data["content"][0]
+
+news = data["content"][random.randrange(0, 999)]
 print(news)
+print('===========================================')
 
 cws_model = "ltp_data_v3.4.0/cws.model"
 pos_model = "ltp_data_v3.4.0/pos.model"
@@ -57,7 +52,7 @@ word_list = get_word_list(news,cws_model)
 postag_list = get_postag_list(word_list,pos_model)
 parser_list = get_parser_list(word_list,postag_list,par_model)
 for i in range(len(word_list)):
-    print(word_list[i],parser_list[i])
+    print(word_list[i], parser_list[i])
 
 
 
