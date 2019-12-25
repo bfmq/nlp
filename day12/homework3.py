@@ -10,7 +10,7 @@ data_source = "../day5/data/export_sql_1558435/sqlResult_1558435.csv"
 data = pd.read_csv(data_source, encoding='utf-8')
 data = data.fillna('')
 news = data["content"][463]
-news = "她说“今天天气不错，可以出去玩”"
+news = "她说今天天气不错，可以出去玩"
 
 cws_model = "ltp_data_v3.4.0/cws.model"
 pos_model = "ltp_data_v3.4.0/pos.model"
@@ -46,28 +46,18 @@ def get_parser_list(word_list,postag_list,model):
     return arc_list
 
 
-ALL = []
 def parser(word_index, word_list):
-    ALL.append(word_index)
-    next_word_index, next_word_link = parser_list[word_index]
-    if next_word_index in ALL: return ALL
-    return parser(next_word_index, word_list)
+    next_word_index, _ = parser_list[word_index]
+    return word_list[next_word_index]
 
 
-word_list = get_word_list(news,cws_model)
+word_list = get_word_list(news, cws_model)
 postag_list = get_postag_list(word_list,pos_model)
 parser_list = get_parser_list(word_list,postag_list,par_model)
 
-for i in range(len(word_list)):
-    print(i, word_list[i], parser_list[i])
 
-# next_word_index, next_word_link = parser_list[1]
-# print(word_list[1], next_word_index, next_word_link)
-# next_word_index, next_word_link = parser_list[318]
-# print(word_list[318], next_word_index, next_word_link)
-# print(news)
-# for i in range(len(word_list)):
-#     if word_list[i] == '说':
-#         print(i)
-        # r = parser(429, word_list)
-        # print(r)
+# 这个题如何单根据返回结果parser_list得到原始说的话整个？？？？
+# parser_list里的依存关系最后都会沉没到标点上
+for i in range(len(word_list)):
+    if word_list[i] == '说':
+        print(parser(i, word_list))
