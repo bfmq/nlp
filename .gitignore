@@ -135,3 +135,4 @@ duia67/
 *.model
 *.npy
 day5/sentiment_analysis/core/*.json
+*.pkl
