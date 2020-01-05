@@ -4,9 +4,7 @@
 
 
 import torch
-import torch.nn.functional as F
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPT2Config
-from torch.utils.data import DataLoader, Dataset
 
 
 tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
