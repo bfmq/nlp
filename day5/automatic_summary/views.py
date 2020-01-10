@@ -24,11 +24,6 @@ class Index(View):
             return render(request, 'layout/layout_promo.html', locals())
 
 
-class Asteroids(View):
-    def get(self, request):
-        return render(request, 'layout/asteroids.html')
-
-
 class TextSummary(View):
     def get(self, request):
         return render(request, 'automatic_summary/text_summary.html')
