@@ -7,7 +7,6 @@ import pandas as pd
 from gensim.models.word2vec import Word2Vec
 
 
-# random.seed = 16
 train = pd.read_csv('../../data/ai_challenger_sentiment_analysis/train/trainingset.csv')
 validation = pd.read_csv("../../data/ai_challenger_sentiment_analysis/validationset.csv")
 test = pd.read_csv("../../data/ai_challenger_sentiment_analysis/testa.csv")
@@ -20,6 +19,11 @@ with open('../../data/stop/stopword.txt', encoding='utf-8') as f:
 
 
 def content_process(content):
+    """
+    切文本
+    :param content:
+    :return:
+    """
     return [c for c in content if c not in stop_words]
 
 

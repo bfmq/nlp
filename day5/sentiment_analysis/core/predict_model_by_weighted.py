@@ -35,10 +35,14 @@ def test_CV_CNN(val_x=new_val, y_col='location_traffic_convenience'):
 if "__main__" == __name__:
     y_cols = val.columns[2:]
     F1_scores = 0
+    F1_list = []
+    acc_list = []
     for y_col in y_cols:
         F1_score, acc = test_CV_CNN(y_col=y_col)
         print(f"{y_col} accuracy_score is {acc}", f"{y_col} f1_score is {F1_score}")
         F1_scores += F1_score
+        F1_list.append(F1_score)
+        acc_list.append(acc)
 
     print('===============')
     print(f"all F1_score is {F1_scores/20}")
