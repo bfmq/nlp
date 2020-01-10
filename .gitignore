@@ -134,5 +134,4 @@ duia67/
 *.csv
 *.model
 *.npy
-day5/sentiment_analysis/core/*.json
 *.pkl
