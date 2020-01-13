@@ -13,7 +13,7 @@ from sentiment_analysis.core.get_result import *
 class SentimentAnalysis(View):
     def make_data(self, class_B):
         color_list = [
-            '#da0d68',
+            '#d56d68', '#d897a8', '#dabe88', '#d47868', '#da0d68',
             '#975e6d', '#ef2d36', '#aeb92c', '#ebb40f', '#8f1c53',
             '#e0719c', '#c94a44', '#4eb849', '#e1c315', '#ba9232',
             '#f99e1c', '#b53b54', '#f68a5c', '#9ea718', '#b34039',
@@ -34,36 +34,36 @@ class SentimentAnalysis(View):
             'others': round(np.mean([class_B[class_b] for class_b in class_B if class_b.startswith('others')])),
         }
         echart_data = [{
-        'name': SentimentAnalysisDict[class_a],
-        'itemStyle': {'color': color_list.pop()},
-        'children': [{
-            'name': SentimentAnalysisDict[class_b],
+            'name': SentimentAnalysisDict[class_a],
             'itemStyle': {'color': color_list.pop()},
             'children': [{
-                'name': class_B[class_b],
+                'name': SentimentAnalysisDict[class_b],
                 'itemStyle': {'color': color_list.pop()},
-                'value': class_B[class_b] + 3,
-            }]
-        } for class_b in class_B if class_b.startswith(class_a)],
-    } for class_a in class_A]
+                'children': [{
+                    'name': class_B[class_b],
+                    'itemStyle': {'color': color_list.pop()},
+                    'value': class_B[class_b] + 3,
+                }]
+            } for class_b in class_B if class_b.startswith(class_a)],
+        } for class_a in class_A]
         return class_A, echart_data
 
     def get(self, request):
         return render(request, 'sentiment_analysis/sentiment_analysis.html')
 
     def post(self, request):
-        # try:
+        try:
             contents = request.POST.get('contents')
             if not contents: raise Exception
             class_B = get_result(contents)
             class_A, echart_data = self.make_data(class_B)
             ret = hr(status=True, message={'echart_data': echart_data, 'class_A': class_A}, code=200)
 
-        # except Exception as e:
-        #     print(e)
-        #     ret = hr(status=False, message="请输入文本...", code=201)
-        #
-        # finally:
+        except Exception as e:
+            print(e)
+            ret = hr(status=False, message="请输入文本...", code=201)
+
+        finally:
             return HttpResponse(json.dumps(ret))
 
     def put(self, request):
@@ -78,5 +78,6 @@ class SentimentAnalysis(View):
                   'others_willing_to_consume_again']
         class_B = dict(zip(y_cols, pred))
         class_A, echart_data = self.make_data(class_B)
+        
         ret = hr(status=True, message={'echart_data': echart_data, 'class_A': class_A, 'content': content}, code=200)
         return HttpResponse(json.dumps(ret))

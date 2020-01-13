@@ -79,7 +79,7 @@ def train_model(train_x=new_train, test_x=new_test, val_x=new_val, y_col='locati
     saveBestModel = ModelCheckpoint(best_weights_filepath, monitor='val_loss', save_best_only=True, mode='auto')
 
     for i in range(folds):
-        model.fit(train_x, train_y_onehot, epochs=5, batch_size=64, validation_data=(val_x, y_val_onehot),
+        model.fit(train_x, train_y_onehot, epochs=5, batch_size=1, validation_data=(val_x, y_val_onehot),
                             callbacks=[earlyStopping, saveBestModel, reduce_lr], shuffle=True, use_multiprocessing=True,
                             workers=4)
 
