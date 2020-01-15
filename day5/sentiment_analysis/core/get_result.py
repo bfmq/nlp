@@ -30,6 +30,8 @@ data_T = sequence.pad_sequences(data_w, maxlen=1359)
 
 def get_result(content):
     content = [content_process(content)]
+    tokenizer.fit_on_texts(content)
+    tokenizer.fit_on_texts(content)
     w = tokenizer.texts_to_sequences(content)
     t = sequence.pad_sequences(w, maxlen=1359)
 
@@ -41,5 +43,5 @@ def get_result(content):
         y = model.predict(t)
         y = np.argmax(y, axis=1)[0]
         result[y_col] = int(y-2)
-
+        print(y)
     return result

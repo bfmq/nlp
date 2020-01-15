@@ -1,5 +1,4 @@
 import random
-import numpy as np
 import json
 from django.views import View
 from django.shortcuts import render, HttpResponse
