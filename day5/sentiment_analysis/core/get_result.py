@@ -4,6 +4,7 @@
 
 import pandas as pd
 import numpy as np
+import json
 from keras.models import load_model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
@@ -25,14 +26,12 @@ texts = data['content']
 tokenizer = Tokenizer(num_words=50000)
 tokenizer.fit_on_texts(texts)
 data_w = tokenizer.texts_to_sequences(texts)
-data_T = sequence.pad_sequences(data_w, maxlen=1359)
 
 
 def get_result(content):
-    content = [content_process(content)]
-    tokenizer.fit_on_texts(content)
-    tokenizer.fit_on_texts(content)
-    w = tokenizer.texts_to_sequences(content)
+    content = content_process(content)
+    content = [f"'{c}'" for c in content]
+    w = tokenizer.texts_to_sequences([content])
     t = sequence.pad_sequences(w, maxlen=1359)
 
     result = {}
@@ -43,5 +42,14 @@ def get_result(content):
         y = model.predict(t)
         y = np.argmax(y, axis=1)[0]
         result[y_col] = int(y-2)
-        print(y)
+        # print(y)
     return result
+
+
+# random_df = test.ix[0]
+# content = random_df['content']
+# pred = json.loads(random_df['pred'])
+# print(content)
+# print(pred)
+# r = get_result(content)
+# print(r)
