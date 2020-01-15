@@ -60,7 +60,6 @@ class SentimentAnalysis(View):
             ret = hr(status=True, message={'echart_data': echart_data, 'class_A': class_A}, code=200)
 
         except Exception as e:
-            print(e)
             ret = hr(status=False, message="请输入文本...", code=201)
 
         finally:
