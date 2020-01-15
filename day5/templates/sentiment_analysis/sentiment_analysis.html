@@ -46,7 +46,7 @@
 
         <div class="span2">
 
-            <button class="btn green btn-block" style="margin-top: 20px" onclick="doRandom()">
+            <button class="btn popovers green btn-block" data-trigger="hover" style="margin-top: 20px" onclick="doRandom()" data-placement="bottom" data-content="随机生成文本结果已提前预测完成，不必再次预测" data-original-title="注意！">
 
                 <i class="m-icon-swapup m-icon-white"></i>随机生成文本
 
@@ -56,8 +56,9 @@
 
         <div class="span2">
 
-            <button class="btn blue btn-block" style="margin-top: 20px" onclick="doWork()">
+            <button class="btn popovers blue btn-block" data-trigger="hover" style="margin-top: 20px" onclick="doWork()" data-placement="bottom" data-content="预测结果需要运行20个模型，请耐心等待" data-original-title="提示！">
 
+                
                 生成分析<i class="m-icon-swapdown m-icon-white"></i>
 
             </button>
