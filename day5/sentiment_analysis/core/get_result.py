@@ -25,7 +25,6 @@ data = pd.read_csv('data/ai_challenger_sentiment_analysis/data_char.csv')
 texts = data['content']
 tokenizer = Tokenizer(num_words=50000)
 tokenizer.fit_on_texts(texts)
-data_w = tokenizer.texts_to_sequences(texts)
 
 
 def get_result(content):
@@ -42,14 +41,5 @@ def get_result(content):
         y = model.predict(t)
         y = np.argmax(y, axis=1)[0]
         result[y_col] = int(y-2)
-        # print(y)
+
     return result
-
-
-# random_df = test.ix[0]
-# content = random_df['content']
-# pred = json.loads(random_df['pred'])
-# print(content)
-# print(pred)
-# r = get_result(content)
-# print(r)
