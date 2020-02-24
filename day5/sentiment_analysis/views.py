@@ -4,8 +4,8 @@ from django.views import View
 from django.shortcuts import render, HttpResponse
 from plugins.duia.httpreturn import http_return as hr
 from sentiment_analysis.db import SentimentAnalysisDict
-from sentiment_analysis.core.get_result import test as df
-from sentiment_analysis.core.get_result import *
+# from sentiment_analysis.core.get_result import test as df
+# from sentiment_analysis.core.get_result import *
 # Create your views here.
 
 

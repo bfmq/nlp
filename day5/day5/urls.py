@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from automatic_summary import views as automatic_summary_views
 from sentiment_analysis import views as sentiment_analysis_views
+from alphacat import views as alphacat_views
 
 urlpatterns = [
     url(r'^$', automatic_summary_views.Index.as_view(), name='index'),
     url(r'^text_summary/$', automatic_summary_views.TextSummary.as_view(), name='text_summary'),
     url(r'^sentiment_analysis/$', sentiment_analysis_views.SentimentAnalysis.as_view(), name='sentiment_analysis'),
+    url(r'^alphacat/$', alphacat_views.Cat.as_view(), name='alphacat'),
 ]

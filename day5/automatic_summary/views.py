@@ -3,7 +3,7 @@ import json
 import requests
 from django.views import View
 from django.shortcuts import render, HttpResponse
-from automatic_summary.core.get_sentences import SifEmbedding, df
+# from automatic_summary.core.get_sentences import SifEmbedding, df
 from plugins.duia.httpreturn import http_return as hr
 
 # Create your views here.

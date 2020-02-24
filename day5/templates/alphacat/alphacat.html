@@ -1,0 +1,182 @@
+{% extends "layout/_layout.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block page-body-title %}
+    <h3 class="page-title">
+
+		对话机器人
+
+	</h3>
+
+    <ul class="breadcrumb">
+
+        <li>
+
+            <i class="icon-android"></i>
+
+            <a href="#">对话机器人</a>
+
+            <i class="icon-angle-right"></i>
+
+        </li>
+
+        <li><a href="#">对话机器人</a></li>
+
+    </ul>
+{% endblock %}
+
+{% block page-body-container %}
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <div class="portlet">
+
+                <div class="portlet-body" id="chats">
+
+                    <div class="scroller" data-height="435px" data-always-visible="1" data-rail-visible1="1">
+
+                        <ul class="chats">
+
+                            <li class="in">
+
+                                <img class="avatar" alt="" src="/statics/media/image/avatar1.jpg" />
+
+                                <div class="message">
+
+                                    <span class="arrow"></span>
+
+                                    <a href="#" class="name">人工智障</a>
+
+                                    <span class="datetime">at Feb 22, 2020 02:02</span>
+
+                                    <span class="body">
+
+                                    请问有什么可以帮您的？
+
+                                    </span>
+
+                                </div>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="chat-form">
+
+                        <div class="input-cont">
+
+                            <input class="m-wrap" type="text" placeholder="Type a message here..." />
+
+                        </div>
+
+                        <div class="btn-cont">
+
+                            <span class="arrow"></span>
+
+                            <a href="" class="btn blue icn-only"><i class="icon-ok icon-white"></i></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        (function () {
+
+            var cont = $('#chats');
+            var list = $('.chats', cont);
+            var form = $('.chat-form', cont);
+            var input = $('input', form);
+            var btn = $('.btn', form);
+
+            var handleClick = function (e) {
+                e.preventDefault();
+
+                var text = input.val();
+                if (text.length == 0) {
+                    return;
+                }
+
+                var time = new Date();
+                var time_str = time.toString('MMM dd, yyyy hh:mm');
+                var tpl = '';
+                tpl += '<li class="out">';
+                tpl += '<img class="avatar" alt="" src="/statics/media/image/avatar2.jpg"/>';
+                tpl += '<div class="message">';
+                tpl += '<span class="arrow"></span>';
+                tpl += '<a href="#" class="name">冯诺依曼</a>&nbsp;';
+                tpl += '<span class="datetime">at ' + time_str + '</span>';
+                tpl += '<span class="body">';
+                tpl += text;
+                tpl += '</span>';
+                tpl += '</div>';
+                tpl += '</li>';
+
+                var msg = list.append(tpl);
+                input.val("");
+                $('.scroller', cont).slimScroll({
+                    scrollTo: list.height()
+                });
+
+                $.ajax({
+                    url: '{% url "alphacat" %}',
+                    type: 'POST',
+                    data: {
+                        'contents': text
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var time = new Date();
+                        var time_str = time.toString('MMM dd, yyyy hh:mm');
+                        var tpl = '';
+                        tpl += '<li class="in">';
+                        tpl += '<img class="avatar" alt="" src="/statics/media/image/avatar1.jpg"/>';
+                        tpl += '<div class="message">';
+                        tpl += '<span class="arrow"></span>';
+                        tpl += '<a href="#" class="name">人工智障</a>&nbsp;';
+                        tpl += '<span class="datetime">at ' + time_str + '</span>';
+                        tpl += '<span class="body">';
+                        tpl += data;
+                        tpl += '</span>';
+                        tpl += '</div>';
+                        tpl += '</li>';
+
+                        var msg = list.append(tpl);
+                        $('.scroller', cont).slimScroll({
+                            scrollTo: list.height()
+                        });
+                    }
+                })
+            };
+
+
+            $("#chats .chat-form input").keypress(function (e) {
+                if (e.keyCode == 13) {
+                    handleClick();
+                    return false; //<---- Add this line
+                }
+            });
+
+            btn.click(handleClick);
+
+        })();
+
+    </script>
+
+{% endblock %}
