@@ -50,6 +50,8 @@
 
                                     <a href="#" class="name">人工智障</a>
 
+                                    <span class="datetime" id="base_time"></span>
+
                                     <span class="body">
 
                                     请问有什么可以帮您的？
@@ -95,6 +97,13 @@
 {% block js %}
 
     <script>
+        (function () {
+            var time = new Date();
+            var time_str = time.toString('MMM dd, yyyy hh:mm');
+            $("#base_time").text(time_str)
+
+        })();
+
         (function () {
 
             var cont = $('#chats');

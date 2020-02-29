@@ -6,7 +6,7 @@ from django.shortcuts import render, HttpResponse
 from plugins.duia.httpreturn import http_return as hr
 from alphacat.core.spider_man import spider_man
 from alphacat.core.syntax_tree import get_generation_by_gram
-
+from alphacat.core.dialogue_robot import get_answer
 # Create your views here.
 
 
@@ -17,7 +17,7 @@ class Cat(View):
     def post(self, request):
         try:
             contents = request.POST.get('contents').strip()
-            message = spider_man(contents) or get_generation_by_gram()
+            message = get_answer(contents) or spider_man(contents) or get_generation_by_gram()
 
         except Exception as e:
             print(e)
