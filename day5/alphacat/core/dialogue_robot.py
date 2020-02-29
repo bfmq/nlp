@@ -126,7 +126,7 @@ def get_answer(text):
     corr_list = list()
     for sentence in sentence_class:
         corr = eucliDist(np.array(sentence_vec), sentence_vecs[sentence])
-        if corr == 0:
+        if corr <= 0.003:
             corr_list.append(sentence)
 
     if not corr_list: return False

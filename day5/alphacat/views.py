@@ -1,6 +1,4 @@
-import random
 import json
-import requests
 from django.views import View
 from django.shortcuts import render, HttpResponse
 from plugins.duia.httpreturn import http_return as hr
