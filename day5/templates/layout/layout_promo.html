@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+	<meta charset="utf-8" />
+
+	<title>冯诺依曼队</title>
+
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+	<meta content="" name="description" />
+
+	<meta content="" name="author" />
+
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+	<link href="/statics/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/style.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+
+	<link href="/statics/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<link href="/statics/media/css/promo.css" rel="stylesheet" type="text/css"/>
+
+	<link href="/statics/media/css/animate.css" rel="stylesheet" type="text/css"/>
+
+	<link rel="shortcut icon" href="/statics/media/image/favicon.ico" />
+
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed page-full-width">
+
+	<div class="page-container row-fluid">
+
+		<div class="page-content no-min-height">
+
+			<div class="container-fluid promo-page">
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<div class="block-grey">
+
+							<div class="container">
+
+								<div id="promo_carousel" class="carousel slide">
+
+									<div class="carousel-inner">
+
+										<div class="active item">
+
+											<div class="row-fluid">
+
+												<div class="span7 margin-bottom-20 margin-top-20 animated rotateInUpRight">
+
+													<h1>来自{{ country }}{{ region }}的访问</h1>
+
+													<p>自动摘要问题是NLP领域的一个经典问题，简单的说，就是输入一段长文 字，输出对这段长文字的一个总结概 要。 在新闻，语音播报、文档信息提取、公司报表、上市公司分析等等领域具有很多的应用场景。</p>
+
+													<p>本项目主要使用了word2vec模型使用SifEmbedding训练句向量，经过KNN平滑等优化。</p>
+
+													<a href="{% url 'text_summary' %}" class="btn red big xlarge">
+
+													去试试
+
+													<i class="m-icon-big-swapright m-icon-white"></i>
+
+													</a>
+
+												</div>
+
+												<div class="span5 animated rotateInDownLeft">
+
+													<a href="{% url 'text_summary' %}"><img src="/statics/media/image/text_summary.png" alt=""></a>
+
+												</div>
+
+											</div>
+
+										</div>
+
+									</div>
+
+									<a class="carousel-control left" href="#promo_carousel" data-slide="prev">
+
+									<i class="m-icon-big-swapleft m-icon-white"></i>
+
+									</a>
+
+									<a class="carousel-control right" href="#promo_carousel" data-slide="next">
+
+									<i class="m-icon-big-swapright m-icon-white"></i>
+
+									</a>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="block-yellow">
+
+							<div class="container">
+
+								<div class="row-fluid">
+
+									<div class="span5 margin-bottom-20">
+
+										<a href="{% url 'sentiment_analysis' %}"><img src="/statics/media/image/sentiment_analysis.png" alt=""></a>
+
+									</div>
+
+									<div class="span7">
+
+										<h2>情感分析</h2>
+
+                                        <p>在自然语言处理中，有一个常见的问题就是对客户的评价进行分析。 这些用户评论中，包含了大量的有用信息，例如情感分析，或者相关事实描述。</p>
+
+                                        <p>本项目主要使用了神经网络训练出6个大类20个小类的不同情感指标。</p>
+
+                                        <a href="{% url 'sentiment_analysis' %}" class="btn blue big xlarge">
+
+										去看看
+
+										<i class="m-icon-big-swapright m-icon-white"></i>
+
+										</a>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="block-transparent">
+
+							<div class="container">
+
+								<div class="row-fluid margin-bottom-20">
+
+									<div class="span6 margin-bottom-20">
+
+										<h2>对话机器人</h2>
+
+										<p>对话机器人的常见的NLP与自然语言处理的应用方向，本课题将使用脱敏的某真实常见下的QA数据集，构造一个用于银行系统的对话机器人。</p>
+
+										<p>银行对话机器人用到的这些技术，还可以使用在其他领域，例如保险，理财，购物等等。</p>
+
+                                        <p>本项目主要使用了word2vec、SifEmbedding算法、K-Means聚类后优化得出。</p>
+
+                                        <a href="{% url 'alphacat' %}" class="btn yellow big xlarge">
+
+										去测测
+
+										<i class="m-icon-big-swapright m-icon-white"></i>
+
+										</a>
+
+                                    </div>
+
+									<div class="span6 margin-bottom-20">
+
+										<a href="{% url 'alphacat' %}"><img src="/statics/media/image/alphacat.png" alt=""></a>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+                        <div class="block-grey">
+
+							<div class="container">
+
+								<div class="row-fluid margin-bottom-20">
+
+									<div class="span6 margin-bottom-20">
+
+                                        <h1>言论提取</h1>
+
+                                        <p>随着每天涌入的新闻信息越来越多，获得不同人物对于不同事件的观点，获得重要人物每日对于不同事项的观点描述，这个功能对于新闻阅读、观点总结能够起到很大的辅助作用。</p>
+
+                                        <p>本项目主要使用了华工大语义分析模型pyltp实现。</p>
+
+                                        <a href="{% url 'automatic_get' %}" class="btn green big xlarge">
+
+                                        去看看
+
+                                        <i class="m-icon-big-swapright m-icon-white"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                    <div class="span6 margin-bottom-20">
+
+                                        <a href="{% url 'automatic_get' %}"><img src="/statics/media/image/automatic_get.png" alt=""></a>
+
+                                    </div>
+
+                                </div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="/statics/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+
+	<script src="/statics/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    
+	<script src="/statics/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+
+	<script src="/statics/media/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<script src="/statics/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+	<script src="/statics/media/js/jquery.blockui.min.js" type="text/javascript"></script>  
+
+	<script src="/statics/media/js/jquery.cookie.min.js" type="text/javascript"></script>
+
+	<script src="/statics/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
+
+	<!-- END CORE PLUGINS -->
+
+	<script src="/statics/media/js/app.js"></script>      
+
+	<script>
+
+		jQuery(document).ready(function() {    
+
+		   App.init();
+
+		   jQuery('#promo_carousel').carousel({
+
+		      interval: 10000,
+
+		      pause: 'hover'
+
+		   });
+
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->
+
+</body>
+
+<!-- END BODY -->
+
+</html>

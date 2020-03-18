@@ -1,0 +1,165 @@
+{% extends "layout/_layout.html" %}
+
+{% block css %}
+    <script src="/statics/plugins/echarts.min.js"></script>
+{% endblock %}
+
+{% block page-body-title %}
+    <h3 class="page-title">
+
+		言论提取
+
+	</h3>
+
+    <ul class="breadcrumb">
+
+        <li>
+
+            <i class="icon-file-text"></i>
+
+            <a href="#">言论提取</a>
+
+            <i class="icon-angle-right"></i>
+
+        </li>
+
+        <li><a href="#">言论提取</a></li>
+
+    </ul>
+{% endblock %}
+
+{% block page-body-container %}
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <textarea style="height: 100px;width: 98%" id="textarea_input"></textarea>
+
+        </div>
+
+    </div>
+
+    <div class="row-fluid">
+
+        <div class="span3"></div>
+
+        <div class="span2">
+
+            <button class="btn popovers green btn-block" data-trigger="hover" style="margin-top: 20px" onclick="doRandom()" data-placement="bottom">
+
+                <i class="m-icon-swapup m-icon-white"></i>随机生成文本
+
+            </button>
+
+        </div>
+
+        <div class="span2">
+
+            <button class="btn popovers blue btn-block" data-trigger="hover" style="margin-top: 20px" onclick="doWork()" data-placement="bottom" data-content="预测结果大约需要5秒左右" data-original-title="提示！">
+
+
+                开始提取<i class="m-icon-swapdown m-icon-white"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <div id="container" style="width: auto; height: 550px"></div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        function doRandom() {
+            $.ajax({
+                url: '{% url "automatic_get" %}',
+                type: 'PUT',
+                data: {},
+                dataType: 'json',
+                success: function (data) {
+                    $("#textarea_input").val(data.message.content);
+                }
+            })
+        }
+
+        function doWork() {
+            $.ajax({
+                url: '{% url "automatic_get" %}',
+                type: 'POST',
+                data: {
+                    'contents': $("#textarea_input").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data){
+                        makeEchart(data);
+                    }else{
+                        $("#textarea_input").val(data.message)
+                    }
+                }
+            })
+        }
+
+        function makeEchart (data) {
+            var dom = document.getElementById("container");
+
+            var myChart = echarts.init(dom);
+
+            myChart.setOption(option = {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [
+                    {
+                        type: 'tree',
+
+                        data: [data],
+
+                        top: '3%',
+                        left: '3%',
+                        bottom: '3%',
+                        right: '65%',
+
+                        symbolSize: 10,
+
+                        label: {
+                            normal: {
+                                position: 'left',
+                                verticalAlign: 'middle',
+                                align: 'right',
+                                fontSize: 13
+                            }
+                        },
+
+                        leaves: {
+                            label: {
+                                normal: {
+                                    position: 'right',
+                                    verticalAlign: 'middle',
+                                    align: 'left'
+                                }
+                            }
+                        },
+
+                        expandAndCollapse: false,
+                        animationDuration: 550,
+                        animationDurationUpdate: 650
+                    }
+                ]
+            });
+        }
+
+    </script>
+{% endblock %}
