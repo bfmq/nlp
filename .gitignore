@@ -129,11 +129,7 @@ dmypy.json
 .pyre/
 
 .idea/
-.idea/*.xml
-duia67/
-*.csv
-*.model
-*.npy
-*.pkl
+data/
+models/
 *.bin
-*.pth
+
