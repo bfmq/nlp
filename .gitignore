@@ -135,3 +135,5 @@ duia67/
 *.model
 *.npy
 *.pkl
+*.bin
+*.pth
