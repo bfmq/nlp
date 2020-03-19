@@ -17,6 +17,8 @@ class AutomaticGet(View):
         try:
             contents = request.POST.get('contents').strip()
             all_list = get_speech(contents)
+            if not all_list:
+                raise Exception('no speech')
 
             # 将同名合并，言论合并
             all_dict = defaultdict(list)
@@ -47,7 +49,7 @@ class AutomaticGet(View):
             }
 
         except Exception as e:
-            ret = {'name': '原句'}
+            ret = {'name': '原句', 'children': [{'name': '无言论'}]}
 
         finally:
             return HttpResponse(json.dumps(ret))
